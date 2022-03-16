@@ -16,14 +16,17 @@ public interface FuncionarioRepository extends PagingAndSortingRepository<Funcio
 		JpaSpecificationExecutor<Funcionario> {
 	List<Funcionario> findByNome(String nome);
 	
+	//JPQL
 	@Query("SELECT f FROM Funcionario f WHERE f.nome = :nome "
 			+ "AND f.salario >= :salario AND f.dataContratacao = :data")
 	List<Funcionario> findNomeSalarioMaiorDataContratacao(String nome, Double salario, LocalDate data);
 	
+	//Query nativa do banco de dados
 	@Query(value = "SELECT * FROM funcionarios f WHERE f.data_contratacao >= :data",
 			nativeQuery = true)
 	List<Funcionario> findDataContratacaoMaior(LocalDate data);
 	
+	//Query nativa do banco de dados
 	@Query(value = "SELECT f.id, f.nome, f.salario FROM funcionarios f", nativeQuery = true)
 	List<FuncionarioProjecao> findFuncionarioSalario();
 }
